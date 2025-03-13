@@ -16,7 +16,7 @@ class Order(Base, TimestampedMixin):
         Enum(OrderStatus),
         nullable=False
     ) 
-    user_id: Mapped[UUID]  = mapped_column(
+    user_id: Mapped[UUID] = mapped_column(
         ForeignKey('users.id', ondelete='CASCADE'),
     )
     

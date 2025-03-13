@@ -7,6 +7,7 @@ from starlette import status
 
 from app.core.container import Container
 from app.db import User, Seller
+from app.db.transaction import atomic
 from app.schemas.product import CreateProductSchema, ProductSchema
 from app.schemas.seller import SellerSchema
 from app.services import ProductService, SellerService
@@ -28,12 +29,6 @@ async def create_product(
 ) -> ProductSchema:
     create_product_schema.seller_id = seller.id
     product = await product_service.create(obj_in=create_product_schema)
-    seller_schema = SellerSchema(
-        id=seller.id,
-        name=seller.name,
-        bio=seller.bio,
-        is_verified=seller.is_verified,
-    )
     product_schema = ProductSchema(
         id=product.id,
         name=product.name,
@@ -41,6 +36,5 @@ async def create_product(
         price=product.price,
         rating=product.rating,
         quantity=product.quantity,
-        seller=seller_schema
     )
     return product_schema

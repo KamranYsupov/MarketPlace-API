@@ -16,8 +16,8 @@ pyjwt = {extras = ["crypto"], version = "^2.9.0"}
 bcrypt = "^4.2.0"
 alembic = "^1.13.2"
 strawberry-graphql = {extras = ["fastapi"], version = "^0.239.2"}
-
-
+gunicorn = "^23.0.0"
+asyncpg = "^0.30.0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.3.2"
