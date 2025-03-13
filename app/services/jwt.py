@@ -34,7 +34,7 @@ class JWTService:
 
     async def encode(self, user: User | UserSchema, token_type: TokenEnum) -> str:
         now = datetime.datetime.now()
-        payload = {'sub': str(user.id), 'iat': now}
+        payload = {'sub': str(user.id), 'iat': int(now.timestamp())}
         if token_type == TokenEnum.ACCESS:
             timedelta = datetime.timedelta(minutes=self.access_expire_minutes)
             payload.update(username=user.username, email=user.email)
