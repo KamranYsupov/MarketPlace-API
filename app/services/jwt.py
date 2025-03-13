@@ -33,7 +33,7 @@ class JWTService:
         self._repository_refresh_token = repository_refresh_token
 
     async def encode(self, user: User | UserSchema, token_type: TokenEnum) -> str:
-        now = datetime.datetime.utcnow()
+        now = datetime.datetime.now()
         payload = {'sub': str(user.id), 'iat': now}
         if token_type == TokenEnum.ACCESS:
             timedelta = datetime.timedelta(minutes=self.access_expire_minutes)
@@ -57,7 +57,7 @@ class JWTService:
         if token_type == TokenEnum.REFRESH:
             await self._repository_refresh_token.delete(sub=user.id)
             await self._repository_refresh_token.create(
-                dict(sub=user.id, token=token, expires_in=expire)
+                dict(sub=user.id, token=token, expires_in=int(expire.timestamp()))
             )
 
         return token

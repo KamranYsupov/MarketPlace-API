@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import ORJSONResponse
+from starlette.middleware.cors import CORSMiddleware
 from strawberry.asgi import GraphQL
 
 from app.core.config import settings
@@ -25,7 +26,13 @@ def create_app() -> FastAPI:
         default_response_class=ORJSONResponse,
         lifespan=lifespan,
     )
-
+    fastapi_app.add_middleware(
+        CORSMiddleware,
+        allow_origins=["*"],
+        allow_credentials=True,
+        allow_methods=["*"],
+        allow_headers=["*"],
+    )
     fastapi_app.container = container
     fastapi_app.include_router(routers.api_router, prefix=settings.api_v1_prefix)
 
