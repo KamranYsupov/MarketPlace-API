@@ -5,8 +5,7 @@ from pydantic import Field
 
 from .mixins import SellerSchemaMixin
 
-if not TYPE_CHECKING:
-    from .product import ProductSchema
+from .product import ProductSchema
 
 
 class SellerSchema(SellerSchemaMixin):
@@ -14,7 +13,7 @@ class SellerSchema(SellerSchemaMixin):
                    
 
 class SellerProductsSchema(SellerSchema):
-    products: list['ProductSchema'] 
+    products: list[ProductSchema]
     
                        
 class CreateSellerSchema(SellerSchemaMixin):
